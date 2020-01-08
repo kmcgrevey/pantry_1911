@@ -8,30 +8,28 @@ class PantryTest < Minitest::Test
 
   def setup
     @pantry = Pantry.new
+    @ingredient1 = Ingredient.new("Cheese", "C", 50)
+    @ingredient2 = Ingredient.new("Macaroni", "oz", 200)
+    @recipe = Recipe.new("Mac and Cheese")
   end
 
   def test_it_exists
     assert_instance_of Pantry, @pantry
   end
 
+  def test_it_has_enough_stock
+    @recipe.add_ingredient(@ingredient1, 2)
+    @recipe.add_ingredient(@ingredient2, 8)
+
+    assert_equal Hash.new(0), @pantry.stock
+  end
+
 end
 
 #
-# pry(main)> pantry = Pantry.new
-# # => #<Pantry:0x007fd8858863b8...>
+
 #
-# pry(main)> ingredient1 = Ingredient.new("Cheese", "C", 50)
-# # => #<Ingredient:0x007fd885846e20...>
-#
-# pry(main)> ingredient2 = Ingredient.new("Macaroni", "oz", 200)
-# # => #<Ingredient:0x007fd88582ed98...>
-#
-# pry(main)> recipe = Recipe.new("Mac and Cheese")
-# # => #<Recipe:0x007fd885050fe0...>
-#
-# pry(main)> recipe.add_ingredient(ingredient1, 2)
-#
-# pry(main)> recipe.add_ingredient(ingredient2, 8)
+
 #
 # pry(main)> pantry.stock
 # # => {}
