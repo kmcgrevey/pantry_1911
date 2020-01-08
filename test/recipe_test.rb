@@ -15,27 +15,26 @@ class RecipeTest < Minitest::Test
     assert_instance_of Recipe, @recipe
   end
 
+  def test_it_can_add_ingredients
+    # expected = {}
+    assert_equal Hash.new(0), @recipe.ingredients_required
+
+    @recipe.add_ingredient(@ingredient1, 2)
+    @recipe.add_ingredient(@ingredient2, 8)
+
+    expected = {@ingredient1 => 2, @ingredient2 => 8}
+
+    assert_equal expected, @recipe.ingredients_required
+
+    assert_equal 2, @recipe.amount_required(@ingredient1)
+    assert_equal 8, @recipe.amount_required(@ingredient2)
+    assert_equal [@ingredient1, @ingredient2], @recipe.ingredients
+  end
+
+  def test_it_can_calculate_total_calories
+    @recipe.add_ingredient(@ingredient1, 2)
+    @recipe.add_ingredient(@ingredient2, 8)
+
+    assert_equal 440, @recipe.total_calories
+  end
 end
-
-
-# pry(main)> recipe.ingredients_required
-# # => {}
-#
-# pry(main)> recipe.add_ingredient(ingredient1, 2)
-#
-# pry(main)> recipe.add_ingredient(ingredient2, 8)
-#
-# pry(main)> recipe.ingredients_required
-# # => {#<Ingredient:0x00007fd7811553c8...> => 2, #<Ingredient:0x00007fd78110b0e8...> => 8}
-#
-# pry(main)> recipe.amount_required(ingredient1)
-# # => 2
-#
-# pry(main)> recipe.amount_required(ingredient2)
-# # => 8
-#
-# pry(main)> recipe.ingredients
-# # => [#<Ingredient:0x007fe8438c7a70...>, #<Ingredient:0x007fe843857f40...>]
-#
-# pry(main)> recipe.total_calories
-# # => 440
