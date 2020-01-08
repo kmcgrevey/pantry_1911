@@ -22,37 +22,30 @@ class PantryTest < Minitest::Test
     @recipe.add_ingredient(@ingredient2, 8)
 
     assert_equal Hash.new(0), @pantry.stock
+    assert_equal 0, @pantry.stock_check(@ingredient1)
+
+    @pantry.restock(@ingredient1, 5)
+    assert_equal 5, @pantry.stock_check(@ingredient1)
+
+    @pantry.restock(@ingredient1, 10)
+
+    assert_equal 15, @pantry.stock_check(@ingredient1)
+
+    assert_equal false, @pantry.enough_ingredients_for?(@recipe)
+
+    @pantry.restock(@ingredient2, 7)
+
+    assert_equal false, @pantry.enough_ingredients_for?(@recipe)
+
+    @pantry.restock(@ingredient2, 1)
+
+    assert_equal  true, @pantry.enough_ingredients_for?(@recipe)
+
   end
 
 end
 
-#
 
-#
-
-#
-# pry(main)> pantry.stock
-# # => {}
-#
-# pry(main)> pantry.stock_check(ingredient1)
-# # => 0
-#
-# pry(main)> pantry.restock(ingredient1, 5)
-#
-# pry(main)> pantry.restock(ingredient1, 10)
-#
-# pry(main)> pantry.stock_check(ingredient1)
-# # => 15
-#
-# pry(main)> pantry.enough_ingredients_for?(recipe)
-# # => false
-#
-# pry(main)> pantry.restock(ingredient2, 7)
-#
-# pry(main)> pantry.enough_ingredients_for?(recipe)
-# # => false
-#
-# pry(main)> pantry.restock(ingredient2, 1)
 #
 # pry(main)> pantry.enough_ingredients_for?(recipe)
 # # => true
